@@ -5,12 +5,14 @@ public class Mutuelle extends Personne{
 	private String departement;
 	private int tauxPriseEnCharge;
 	
-	public Mutuelle(int numero_rue, String nom_rue, String ville, int codePostal, String nom,
+	public Mutuelle(String nom, String prenom, int numeroRue, String nomRue, String ville, int codePostal,
 			int téléphone, String email, String departement, int tauxPriseEnCharge) {
-		super(numero_rue, nom_rue, ville, codePostal, nom, téléphone, email);
+		super(nom, prenom, numeroRue, nomRue, ville, codePostal, téléphone, email);
 		this.departement = departement;
 		this.tauxPriseEnCharge = tauxPriseEnCharge;
 	}
+	
+
 	
 
 

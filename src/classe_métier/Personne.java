@@ -3,6 +3,12 @@ package classe_métier;
 public class Personne {
 
 	private String nom;
+	@Override
+	public String toString() {
+		return "nom :" + nom + "\n prenom : " + prenom + "\n numeroRue : " + numeroRue + "\n nomRue : " + nomRue
+				+ "\n ville : " + ville + "\n codePostal : " + codePostal + "\n téléphone : " + téléphone + "\n email" + email;
+	}
+	
 	private String prenom;
 	private  int numeroRue;
 	private  String nomRue;
@@ -10,6 +16,40 @@ public class Personne {
 	private  int codePostal;
 	private int téléphone;
 	private String email;
+	
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public int getNumeroRue() {
+		return numeroRue;
+	}
+
+
+	public String getNomRue() {
+		return nomRue;
+	}
+	public String getVille() {
+		return ville;
+	}
+
+	public int getCodePostal() {
+		return codePostal;
+	}
+
+
+	public int getTéléphone() {
+		return téléphone;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
 	public Personne(String nom, String prenom, int numeroRue, String nomRue, String ville, int codePostal,
 			int téléphone, String email) {
@@ -49,5 +89,7 @@ public class Personne {
 	public String identité() {
 		return nom +" " +  prenom;
 	}
-	
+	public Personne resumer_Personne() {
+		return Personne.this;
+	}
 }
