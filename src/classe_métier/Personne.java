@@ -30,10 +30,6 @@ public class Personne {
 		this.email = email;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
 	public Personne(String nom, int numeroRue, String nomRue, String ville, int codePostal, int téléphone,
 			String email) {
 		super();
@@ -59,4 +55,13 @@ public class Personne {
 	public Personne resumer_Personne() {
 		return Personne.this;
 	}
+	
+	public String getNom() {
+		return nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
 }

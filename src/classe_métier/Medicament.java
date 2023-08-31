@@ -14,5 +14,22 @@ public class Medicament {
 		this.dateMiseService = dateMiseService;
 		this.quantité = quantité;
 	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public int getPrix() {
+		return prix;
+	}
+
+	public int getDateMiseService() {
+		return dateMiseService;
+	}
+
+	public int getQuantité() {
+		return quantité;
+	}
+
 	
 }
