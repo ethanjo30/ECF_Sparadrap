@@ -96,22 +96,22 @@ public class App_Pharma extends JFrame {
 		listmed.add(med4);
 		listmed.add(med5);
 	
-		Medicament medi1 = new Medicament("Analgésique",15,02/2023,50);
-		Medicament medi2 = new Medicament("Antispasmodiques",26,9/2020,36);
-		Medicament medi3 = new Medicament("Corticoïdes",15,07/2021,23);
-		Medicament medi4 = new Medicament("antibactériens",12,02/2023,12);
-		Medicament medi5 = new Medicament("Polymyxines",24,06/2022,24);
-		Medicament medi6 = new Medicament("Tétracyclines",30,01/2021,6);
-		Medicament medi7 = new Medicament("Antituberculeux",36,012/2022,14);
-		Medicament medi8 = new Medicament("Antifongiques",11,11/2020,62);
-		Medicament medi9 = new Medicament("Bêta-bloquants",24,8/2023,24);
-		Medicament medi10 = new Medicament("Correcteurs des bradycardies",15,6/2021,100);
-		Medicament medi11 = new Medicament("Diurétiques",38,02/2022,70);
-		Medicament medi12 = new Medicament("Antiacnéiques",52,06/2022,24);
-		Medicament medi13 = new Medicament("Antiseptiques ",26,06/2021,83);
-		Medicament medi14 = new Medicament("Hormones thyroïdiennes ",27,06/2023,6);
-		Medicament medi15 = new Medicament("Androgènes",33,9/2022,2);
-		Medicament medi16 = new Medicament("Antidiarrhéiques",12,3/2023,54);
+		Medicament medi1 = new Medicament("Analgésique",15,"02/2023",50);
+		Medicament medi2 = new Medicament("Antispasmodiques",26,"9/2020",36);
+		Medicament medi3 = new Medicament("Corticoïdes",15,"07/2021",23);
+		Medicament medi4 = new Medicament("antibactériens",12,"02/2023",12);
+		Medicament medi5 = new Medicament("Polymyxines",24,"06/2022",24);
+		Medicament medi6 = new Medicament("Tétracyclines",30,"01/2021",6);
+		Medicament medi7 = new Medicament("Antituberculeux",36,"12/2022",14);
+		Medicament medi8 = new Medicament("Antifongiques",11,"11/2020",62);
+		Medicament medi9 = new Medicament("Bêta-bloquants",24,"8/2023",24);
+		Medicament medi10 = new Medicament("Correcteurs des bradycardies",15,"6/2021",100);
+		Medicament medi11 = new Medicament("Diurétiques",38,"02/2022",70);
+		Medicament medi12 = new Medicament("Antiacnéiques",52,"06/2022",24);
+		Medicament medi13 = new Medicament("Antiseptiques ",26,"06/2021",83);
+		Medicament medi14 = new Medicament("Hormones thyroïdiennes",27,"06/2023",6);
+		Medicament medi15 = new Medicament("Androgènes",33,"9/2022",2);
+		Medicament medi16 = new Medicament("Antidiarrhéiques",12,"3/2023",54);
 		
 		ListMedi.add(medi1);
 		ListMedi.add(medi2);
@@ -197,12 +197,65 @@ public class App_Pharma extends JFrame {
 		JPanel panel_2 = new JPanel();
 		JPanel panel_3 = new JPanel();
 		JPanel panel_4 = new JPanel();
+		JPanel panel_5 = new JPanel();
 		
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(comboBox.getSelectedIndex());
 				switch (comboBox.getSelectedIndex()) {
-				case 0 :				
+				case 0 :
+					
+					contentPane.add(panel_5, BorderLayout.CENTER);
+					panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+					
+					JComboBox comboBox_3 = new JComboBox();
+					for (Patients value : listpatient) {	
+						comboBox_3.addItem(value.getNom());
+						panel_5.add(comboBox_3);
+					}
+					
+					JTable tableFactur = new JTable();
+					panel_5.add(tableFactur);
+					
+					JComboBox comboBox_4 = new JComboBox();
+					for (Medicament value : ListMedi) {	
+						comboBox_4.addItem(value.getNom());
+						panel_5.add(comboBox_4);
+					
+					comboBox_4.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							
+							tableFactur.setPreferredSize(new Dimension(700,100));
+							tableFactur.setModel(new DefaultTableModel(
+									new Object[][] {
+										{"Nom","Date service","Quantité","prix ttc"},
+											
+										},
+									new String[] {
+											"Nom","Date service","Quantité","prix ttc"	
+									}
+									));
+								
+							for (Medicament med : ListMedi) {
+								if (med.getNom().equals(comboBox_4.getSelectedItem())) {
+									DefaultTableModel model = (DefaultTableModel) tableFactur.getModel();
+									model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
+									
+									tableFactur.setModel(model);
+									panel_5.add(tableFactur);
+									
+									
+								}
+								
+							}
+							
+						}
+					});
+					
+						
+					}
+					
 					break;
 				case 1 :
 					break;
@@ -290,57 +343,5 @@ public class App_Pharma extends JFrame {
 		JButton btnNewButton = new JButton("New button");
 		panel_1.add(btnNewButton);
 		
-		JPanel panel_5 = new JPanel();
-		contentPane.add(panel_5, BorderLayout.CENTER);
-		panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JComboBox comboBox_1 = new JComboBox();
-		for (Patients value : listpatient) {	
-			comboBox_1.addItem(value.getNom());
-			panel_5.add(comboBox_1);
-		}
-		
-		JTable tableFactur = new JTable();
-		panel_5.add(tableFactur);
-		
-		JComboBox comboBox_2 = new JComboBox();
-		for (Medicament value : ListMedi) {	
-			comboBox_2.addItem(value.getNom());
-			panel_5.add(comboBox_2);
-		
-		comboBox_2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				tableFactur.setPreferredSize(new Dimension(700,100));
-				tableFactur.setModel(new DefaultTableModel(
-						new Object[][] {
-							{"Nom","Date service","Quantité","prix"},
-								
-							},
-						new String[] {
-								"Nom","Date service","Quantité","prix"	
-						}
-						));
-					
-				for (Medicament med : ListMedi) {
-					if (med.getNom().equals(comboBox_2.getSelectedItem())) {
-						DefaultTableModel model = (DefaultTableModel) tableFactur.getModel();
-						model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
-						
-						tableFactur.setModel(model);
-						panel_5.add(tableFactur);
-						
-						
-					}
-					
-				}
-				
-			}
-		});
-		
-			
-		}
-
 	}
 }

@@ -4,10 +4,10 @@ public class Medicament {
 
 	private String nom;
 	private int prix;
-	private int dateMiseService;
+	private String dateMiseService;
 	private int quantité;
 	
-	public Medicament(String nom, int prix, int dateMiseService, int quantité) {
+	public Medicament(String nom, int prix, String dateMiseService, int quantité) {
 		super();
 		this.nom = nom;
 		this.prix = prix;
@@ -23,7 +23,7 @@ public class Medicament {
 		return prix;
 	}
 
-	public int getDateMiseService() {
+	public String getDateMiseService() {
 		return dateMiseService;
 	}
 
