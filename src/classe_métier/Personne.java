@@ -16,40 +16,6 @@ public class Personne {
 	private  int codePostal;
 	private int téléphone;
 	private String email;
-	
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public int getNumeroRue() {
-		return numeroRue;
-	}
-
-
-	public String getNomRue() {
-		return nomRue;
-	}
-	public String getVille() {
-		return ville;
-	}
-
-	public int getCodePostal() {
-		return codePostal;
-	}
-
-
-	public int getTéléphone() {
-		return téléphone;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 
 	public Personne(String nom, String prenom, int numeroRue, String nomRue, String ville, int codePostal,
 			int téléphone, String email) {
@@ -89,6 +55,7 @@ public class Personne {
 	public String identité() {
 		return nom +" " +  prenom;
 	}
+	
 	public Personne resumer_Personne() {
 		return Personne.this;
 	}

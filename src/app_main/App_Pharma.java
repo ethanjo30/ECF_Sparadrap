@@ -9,11 +9,13 @@ import javax.swing.border.EmptyBorder;
 
 import classe_métier.Medecin;
 import classe_métier.Medicament;
+import classe_métier.Ordonance;
 import classe_métier.Patients;
-import classe_métier.ordonance;
+
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -30,15 +32,17 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class App_Pharma extends JFrame {
 
 	static ArrayList<Patients>listpatient= new ArrayList<>();
 	static ArrayList<Medecin>listmed= new ArrayList<>();
 	static ArrayList<Medicament>ListMedi= new ArrayList<>();
-	static ArrayList<ordonance>Listordo= new ArrayList<>();
+	static ArrayList<Ordonance>Listordo= new ArrayList<>();
 	
 	private JPanel contentPane;
+	private JTable table_Ordo_Med;
 
 	/**
 	 * Launch the application.
@@ -81,7 +85,7 @@ public class App_Pharma extends JFrame {
 		listmed.add(med5);
 	
 		Medicament medi1 = new Medicament("Analgésique",15,02/2023,50);
-		Medicament medi2 = new Medicament("Antispasmodiquess",26,9/2020,36);
+		Medicament medi2 = new Medicament("Antispasmodiques",26,9/2020,36);
 		Medicament medi3 = new Medicament("Corticoïdes",15,07/2021,23);
 		Medicament medi4 = new Medicament("antibactériens",12,02/2023,12);
 		Medicament medi5 = new Medicament("Polymyxines",24,06/2022,24);
@@ -114,7 +118,29 @@ public class App_Pharma extends JFrame {
 		ListMedi.add(medi15);
 		ListMedi.add(medi16);
 		
-		//ordonance ordo1 = new ordonance ()
+		Ordonance ordo1 = new Ordonance("22/08/23","Gallet","Anne","Martin","Pierre","Hormones", "thyroïdiennes","Androgènes"," ");
+		Ordonance ordo2 = new Ordonance("12/07/23","Gallet","Anne","Durand","Marie","Antidiarrhéiques"," "," "," ");
+		Ordonance ordo3 = new Ordonance("03/001/22","Malka","Michel","Duvet","Honorine","Polymyxines","Diurétiques","Tétracyclines"," ");
+		Ordonance ordo4 = new Ordonance("22/08/23","Malka","Michel","Petit","Jonathan","Antifongiques","Analgésique"," "," ");
+		Ordonance ordo5 = new Ordonance("26/005/23","Khebichat","Omar","Pierard","Laetitia","Antidiarrhéiques","Analgésique"," "," ");
+		Ordonance ordo6 = new Ordonance("22/08/23","Khebichat","Omar","Durand","Marie","Analgésique"," "," "," ");
+		Ordonance ordo7 = new Ordonance("22/08/23","Khebichat","Omar","Duvet","Honorine","Antituberculeux","Corticoïde","Antiacnéiques","Antispasmodiques");
+		Ordonance ordo8 = new Ordonance("22/08/23","Burseaux","Sarah","Pierard","Laetitia","Antituberculeux"," "," "," ");
+		Ordonance ordo9 = new Ordonance("22/08/23","Burseaux","Sarah","Petit","Jonathan","Antiseptique","Diurétiques","antibactériens"," ");
+		Ordonance ordo10 = new Ordonance("22/08/23","Rabah","Nacera","Martin","Pierre","Correcteurs des bradycardies","Bêta-bloquant"," "," ");
+		
+		Listordo.add(ordo1);
+		Listordo.add(ordo2);
+		Listordo.add(ordo3);
+		Listordo.add(ordo4);
+		Listordo.add(ordo5);
+		Listordo.add(ordo6);
+		Listordo.add(ordo7);
+		Listordo.add(ordo8);
+		Listordo.add(ordo9);
+		Listordo.add(ordo10);
+		
+		
 	}
 
 	/**
@@ -140,9 +166,9 @@ public class App_Pharma extends JFrame {
 		public  App_Pharma() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 750, 300);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -166,11 +192,46 @@ public class App_Pharma extends JFrame {
 					JPanel panel_2 = new JPanel();
 					contentPane.add(panel_2, BorderLayout.CENTER);
 					JComboBox comboBox_1 = new JComboBox();
-					for (Medecin value : listmed)	
+					for (Medecin value : listmed) {	
 						comboBox_1.addItem(value.identité());
 						panel_2.add(comboBox_1);
-						panel_2.revalidate();
+						comboBox_1.setSelectedIndex(-1);
 						
+					}
+					JPanel panel_4 = new JPanel();
+					panel_2.add(panel_4);
+					comboBox_1.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							table_Ordo_Med = new JTable();
+							table_Ordo_Med.setPreferredSize(new Dimension(300,200));
+							
+							table_Ordo_Med.setModel(new DefaultTableModel(
+									new Object[][] {
+										{"Date","Nom patient","Prenom patient"},
+									},
+				
+									new String[] {
+											"Date", "Nom patient", "Prenom patient"
+									}
+
+									));
+							
+							for (Ordonance or : Listordo) {
+									if (or.identité().equals(comboBox_1.getSelectedItem())){
+											
+											DefaultTableModel model = (DefaultTableModel) table_Ordo_Med.getModel();
+											model.addRow(new Object[] {or.getDate(),or.getNomPat(),or.getPrenomPat()});
+											
+											table_Ordo_Med.setModel(model);
+							panel_4.add(table_Ordo_Med, BorderLayout.CENTER);
+								}
+										 
+				}	//SINGLE_SELECTION : permet de sélectionner une seule ligne ;
+								
+						}
+						
+					});
 						
 					break;
 				case 3 :
@@ -211,12 +272,6 @@ public class App_Pharma extends JFrame {
 		
 		JButton btnNewButton = new JButton("New button");
 		panel_1.add(btnNewButton);
-		
-		
-		
-		
-		
-		
 		
 	}
 
