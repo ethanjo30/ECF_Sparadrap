@@ -44,6 +44,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Color;
 
 public class App_Pharma extends JFrame {
 
@@ -55,6 +57,8 @@ public class App_Pharma extends JFrame {
 	private JPanel contentPane;
 	private JTable table_Ordo_Med;
 	private JTable table;
+	private JTextField textField;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -188,40 +192,100 @@ public class App_Pharma extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.NORTH);
 		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.CENTER);
+		panel_1.removeAll();
+		
 		JComboBox comboBox = new JComboBox<String>(new String[] {"effectuer un achat", "historique des achat",
 				"historique des ordonnance","detaille client"});
 		 
 		comboBox.setOpaque(false);
 		comboBox.setSelectedIndex(-1);
-		table_Ordo_Med = new JTable();
+		JTable table_Ordo_Med = new JTable();
+		JTable tableFactur = new JTable();
 		JPanel panel_2 = new JPanel();
 		JPanel panel_3 = new JPanel();
 		JPanel panel_4 = new JPanel();
 		JPanel panel_5 = new JPanel();
 		
-		comboBox.addActionListener(new ActionListener() {
+		//single_selection pour une seul selection possible
+		// si double click l'utilisateur peut changer les donnée
+		
+			comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(comboBox.getSelectedIndex());
+				
 				switch (comboBox.getSelectedIndex()) {
+				
 				case 0 :
-					
+					JPanel panel_5 = new JPanel();
 					contentPane.add(panel_5, BorderLayout.CENTER);
-					panel_5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+					panel_5.setLayout(null);
+					
+					textField = new JTextField();
+					textField.setBounds(551, 188, 86, 20);
+					panel_5.add(textField);
+					textField.setColumns(10);
+					textField.setEnabled(false);
+					
+					
+					JLabel lblNewLabel = new JLabel("Total");
+					lblNewLabel.setBounds(467, 191, 46, 14);
+					panel_5.add(lblNewLabel);
+					
+					
+					JButton btnNewButton = new JButton("Validé");
+					btnNewButton.setBounds(76, 187, 89, 23);
+					btnNewButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							// ne pas oublier le try catch pour aucunne selection
+//							for(int i = 0, i = tableFactur.size(), i++); 
+//									if (i) {
+//										
+//									}
+									//if (med.getNom().equals(comboBox_4.getSelectedItem()))
+							
+							try {
+								if(textField.equals(null));
+							} catch (Exception e2) {
+								System.out.println("Pas de médicament saisie");
+							}
+							
+						}
+					});
+					btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+					btnNewButton.setForeground(new Color(0, 100, 0));
+					panel_5.add(btnNewButton);
+					
+					JButton btnNewButton_1 = new JButton("Suprimé");
+					
+					btnNewButton_1.setBounds(198, 187, 89, 23);
+					btnNewButton_1.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+						}
+					
+					});
+					btnNewButton_1.setForeground(new Color(178, 34, 34));
+					btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+					panel_5.add(btnNewButton_1);
 					
 					JComboBox comboBox_3 = new JComboBox();
+					comboBox_3.setBounds(200, 11, 30, 00);
 					for (Patients value : listpatient) {	
 						comboBox_3.addItem(value.getNom());
 						panel_5.add(comboBox_3);
 					}
 					
-					JTable tableFactur = new JTable();
+					
 					panel_5.add(tableFactur);
 					
 					JComboBox comboBox_4 = new JComboBox();
+					comboBox_4.setBounds(367, 11, 30, 22);
 					for (Medicament value : ListMedi) {	
 						comboBox_4.addItem(value.getNom());
 						panel_5.add(comboBox_4);
 					
+						
 					comboBox_4.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -229,21 +293,25 @@ public class App_Pharma extends JFrame {
 							tableFactur.setPreferredSize(new Dimension(700,100));
 							tableFactur.setModel(new DefaultTableModel(
 									new Object[][] {
-										{"Nom","Date service","Quantité","prix ttc"},
+										{"Nom","Date service","Quantité en stock","prix ttc"},
 											
 										},
 									new String[] {
-											"Nom","Date service","Quantité","prix ttc"	
+											"Nom","Date service","Quantité en stock","prix ttc"	
 									}
 									));
 								
 							for (Medicament med : ListMedi) {
 								if (med.getNom().equals(comboBox_4.getSelectedItem())) {
 									DefaultTableModel model = (DefaultTableModel) tableFactur.getModel();
+									
 									model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
+									
+									
 									
 									tableFactur.setModel(model);
 									panel_5.add(tableFactur);
+									panel_1.add(panel_5);
 									
 									
 								}
@@ -273,7 +341,7 @@ public class App_Pharma extends JFrame {
 					comboBox_1.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							
+							table_Ordo_Med.setEnabled(false);
 							table_Ordo_Med.setPreferredSize(new Dimension(700,100));	
 							table_Ordo_Med.setModel(new DefaultTableModel(
 									new Object[][] {
@@ -295,6 +363,7 @@ public class App_Pharma extends JFrame {
 											table_Ordo_Med.setModel(model);
 							panel_4.add(table_Ordo_Med, BorderLayout.CENTER);
 							panel_2.add(panel_4);
+							
 								}
 										 
 				}	//SINGLE_SELECTION : permet de sélectionner une seule ligne ;
@@ -302,10 +371,9 @@ public class App_Pharma extends JFrame {
 						}
 						
 					});
+					panel_1.add(panel_2);
 					break;
 				case 3 :
-					getContentPane().remove(panel_2);
-					getContentPane().remove(panel_4);
 					contentPane.add(panel_3, BorderLayout.CENTER);
 					
 					JComboBox comboBox_2 = new JComboBox();
@@ -328,20 +396,18 @@ public class App_Pharma extends JFrame {
 						}
 						
 					});
+					panel_1.add(panel_3);
 					break;
 				default :
 					break;
 				}
 			}
-		});
+			});
 		
 		panel.add(comboBox);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("New button");
-		panel_1.add(btnNewButton);
+		
 		
 	}
 }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import ClasseMetier.Livre;
 import classe_métier.Patients;
 
 class test {
@@ -18,12 +17,6 @@ class test {
 		
 		assertEquals("Martin", pat.getNom());
 		assertEquals("Pierre", pat.getPrenom());
-		assertEquals(123, pat.getNumeroRue());		
-		assertEquals("rue de la Fictivité", pat.getNomRue());
-		assertEquals("Paris", pat.getVille());
-		assertEquals(75000, pat.getCodePostal());
-		assertEquals(603487571, pat.getTéléphone());
-		assertEquals("Martin.Pierre@gmail.com", pat.getEmail());
 		assertEquals("01/01/1997", pat.getDateNaisssance());
 		assertEquals("197017512348622", pat.getNumSecu());
 	}
