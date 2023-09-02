@@ -182,7 +182,7 @@ public class App_Pharma extends JFrame {
 		public  App_Pharma() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 300);
+		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 
@@ -238,11 +238,11 @@ public class App_Pharma extends JFrame {
 					btnNewButton.setBounds(76, 187, 89, 23);
 					btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							// ne pas oublier le try catch pour aucunne selection
-//							for(int i = 0, i = tableFactur.size(), i++); 
-//									if (i) {
+							// ne pas oublier le try catch pour aucune selection
+//							
+//									if(textField > 0
 //										
-//									}
+//									
 									//if (med.getNom().equals(comboBox_4.getSelectedItem()))
 							
 							try {
