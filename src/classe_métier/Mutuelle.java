@@ -16,4 +16,8 @@ public class Mutuelle extends Personne{
 		this.tauxPriseEnCharge = tauxPriseEnCharge;
 	}
 
+	public int getDepartement() {
+		return departement;
+	}
+
 }

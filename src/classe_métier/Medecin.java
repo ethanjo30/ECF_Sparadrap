@@ -11,7 +11,14 @@ public class Medecin extends Personne {
 		this.numAgrement = numAgrement;
 		this.spécialité = spécialité;
 	}
-	
-	
+
+	public String getNumAgrement() {
+		return numAgrement;
+	}
+
+	public String getSpécialité() {
+		return spécialité;
+	}
+
 	
 }

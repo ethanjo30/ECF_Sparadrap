@@ -30,4 +30,5 @@ public class Medicament {
 	public int getQuantité() {
 		return quantité;
 	}
+	
 }
