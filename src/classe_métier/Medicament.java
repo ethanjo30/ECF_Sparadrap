@@ -2,21 +2,21 @@ package classe_métier;
 
 public class Medicament {
 
-	private String nom;
+	private String nomMedi;
 	private int prix;
 	private String dateMiseService;
 	private int quantité;
 	
 	public Medicament(String nom, int prix, String dateMiseService, int quantité) {
 		super();
-		this.nom = nom;
+		this.nomMedi = nom;
 		this.prix = prix;
 		this.dateMiseService = dateMiseService;
 		this.quantité = quantité;
 	}
 
 	public String getNom() {
-		return nom;
+		return nomMedi;
 	}
 
 	public int getPrix() {

@@ -3,12 +3,6 @@ package classe_métier;
 public class Personne {
 
 	private String nom;
-	@Override
-	public String toString() {
-		return "nom :" + nom + "\n prenom : " + prenom + "\n numeroRue : " + numeroRue + "\n nomRue : " + nomRue
-				+ "\n ville : " + ville + "\n codePostal : " + codePostal + "\n téléphone : " + téléphone + "\n email" + email;
-	}
-	
 	private String prenom;
 	private  int numeroRue;
 	private  String nomRue;
@@ -16,6 +10,12 @@ public class Personne {
 	private  int codePostal;
 	private int téléphone;
 	private String email;
+	
+	@Override
+	public String toString() {
+		return "nom :" + nom + "\n prenom : " + prenom + "\n numeroRue : " + numeroRue + "\n nomRue : " + nomRue
+				+ "\n ville : " + ville + "\n codePostal : " + codePostal + "\n téléphone : " + téléphone + "\n email" + email;
+	}
 
 	public Personne(String nom, String prenom, int numeroRue, String nomRue, String ville, int codePostal,
 			int téléphone, String email) {
@@ -55,13 +55,13 @@ public class Personne {
 	public Personne resumer_Personne() {
 		return Personne.this;
 	}
-	
-	public String getNom() {
-		return nom;
-	}
 
 	public String getPrenom() {
 		return prenom;
+	}
+
+	public String getNom() {
+		return nom;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import classe_métier.Historique;
 import classe_métier.Medecin;
 import classe_métier.Medicament;
 import classe_métier.Mutuelle;
@@ -53,8 +54,10 @@ public class App_Pharma extends JFrame {
 	static ArrayList<Patients>listpatient= new ArrayList<>();
 	static ArrayList<Medecin>listmed= new ArrayList<>();
 	static ArrayList<Medicament>ListMedi= new ArrayList<>();
+	static ArrayList<Medicament>ListMediTampon= new ArrayList<>();
 	static ArrayList<Ordonance>Listordo= new ArrayList<>();
 	static ArrayList<Mutuelle>ListMut= new ArrayList<>();
+	static ArrayList<Historique>Listhisto= new ArrayList<>();
 	
 	private JPanel contentPane;
 	private JTable table_Ordo_Med;
@@ -62,7 +65,9 @@ public class App_Pharma extends JFrame {
 	private JTextField textField;
 	private JTable table_1;
 
-	int total = 0;
+	int somme = 0;
+	int sommeTampon = 0;
+	Patients TamponPat = null;
 
 /**
  *  instanciation de tout les objets
@@ -210,8 +215,7 @@ public class App_Pharma extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
-		
-		
+				
 		/**
 		 * menu principal deroulant
 		 */
@@ -229,6 +233,9 @@ public class App_Pharma extends JFrame {
 		JPanel panel_5 = new JPanel();
 		JPanel panel_6 = new JPanel();
 		JPanel panel_7 = new JPanel();
+		JComboBox comboBox_3 = new JComboBox();
+		JComboBox comboBox_8 = new JComboBox();
+		JComboBox comboBox_6 = new JComboBox();
 			
 			/**
 			 * action a effectuer au changement d'index du menu principal
@@ -277,23 +284,37 @@ public class App_Pharma extends JFrame {
 					 */
 					JButton btnNewButton = new JButton("Validé");
 					btnNewButton.setBounds(76, 187, 89, 23);
-					btnNewButton.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							// ne pas oublier le try catch pour aucune selection
-//							
-//									if(textField > 0 
-//										
-//									
-									//if (med.getNom().equals(comboBox_4.getSelectedItem()))
-							
+					btnNewButton.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+
 							try {
-								if(textField.equals(null));
+								if(tableFactur.getRowCount()==1) {
+									throw new IllegalArgumentException("Pas de médicament selectionné");
+								}
+								if(comboBox_3.getSelectedItem()==null) {
+									throw new IllegalArgumentException("Pas de patient selectionné");
+								}
 							} catch (Exception e2) {
-								System.out.println("Pas de médicament saisie");
+								JOptionPane.showMessageDialog(panel_7, e2);
 							}
 							
+							// doit aller chercher le nom du patient les medicament et le total pour le mettre dans une arraylist historique
+
+							if (tableFactur.getRowCount() != 1 && comboBox_3.getSelectedItem() !=null) {
+								for (Patients pat : listpatient) {
+								if (pat.identité().equals(comboBox_3.getSelectedItem())){
+									TamponPat = pat;
+								}
+							}
+							}
+							Listhisto.add(new Historique(TamponPat, ListMediTampon, sommeTampon));
+							JOptionPane jOptionPane = new JOptionPane();
+							JOptionPane.showConfirmDialog(panel_7, Listhisto);
+						
 						}
 					});
+					
 					
 					/**
 					 * le bouton suprimer retirera la ligne selectionner
@@ -305,10 +326,12 @@ public class App_Pharma extends JFrame {
 					JButton btnNewButton_1 = new JButton("Suprimé");
 					
 					btnNewButton_1.setBounds(198, 187, 89, 23);
-					btnNewButton_1.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-						}
-					
+					btnNewButton.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+						
+						
+					}
 					});
 					
 					btnNewButton_1.setForeground(new Color(178, 34, 34));
@@ -318,13 +341,13 @@ public class App_Pharma extends JFrame {
 					/**
 					 * affiche la liste des different patient de la pharmacie
 					 */
-					JComboBox comboBox_3 = new JComboBox();
+					
 					comboBox_3.setBounds(200, 11, 30, 00);
-					comboBox_3.setSelectedIndex(-1);
 					for (Patients value : listpatient) {	
-						comboBox_3.addItem(value.getNom());
+						comboBox_3.addItem(value.identité());
 						panel_5.add(comboBox_3);
 					}
+					comboBox_3.setSelectedIndex(-1);
 					
 					
 					panel_5.add(tableFactur);
@@ -334,11 +357,11 @@ public class App_Pharma extends JFrame {
 					 */
 					JComboBox comboBox_4 = new JComboBox();
 					comboBox_4.setBounds(367, 11, 30, 22);
-					comboBox_4.setSelectedIndex(-1);
 					for (Medicament value : ListMedi) {	
 						comboBox_4.addItem(value.getNom());
 						panel_5.add(comboBox_4);
 					}
+					comboBox_4.setSelectedIndex(-1);
 					
 					/**
 					 * au changement de medicament dans la combobox
@@ -374,16 +397,19 @@ public class App_Pharma extends JFrame {
 										
 										model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
 
+										ListMediTampon.add(med);
 										/**
 										 * va chercher le prix defini a chque ajout de ligne de medicament
 										 * et fait la somme total
 										 */
-										total = total + med.getPrix();
+										somme = somme + med.getPrix();
 
+										sommeTampon = somme;
 										/**
 										 * affiche la somme total dans le textfield
 										 */
-										textField.setText(""+total);
+										
+										textField.setText(""+somme);
 										
 										panel_4.add(tableFactur,BorderLayout.SOUTH);
 										panel_5.add(panel_4);
@@ -393,6 +419,8 @@ public class App_Pharma extends JFrame {
 								}
 														
 						}});
+						System.out.println(sommeTampon);
+						System.out.println(ListMediTampon);
 						
 					panel_6.add(panel_5);
 					panel_1.add(panel_6);
@@ -419,21 +447,27 @@ public class App_Pharma extends JFrame {
 				
 					JButton btnNewButton_2 = new JButton("Validé");
 					btnNewButton_2.setBounds(76, 187, 89, 23);
-					btnNewButton_2.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							// ne pas oublier le try catch pour aucune selection
-//							
-//									if(textField > 0 
-//										
-//									
-									//if (med.getNom().equals(comboBox_4.getSelectedItem()))
-							
+					btnNewButton_2.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+
 							try {
-								if(textField.equals(null));
+								if(tableFactur.getRowCount()==1) {
+									throw new IllegalArgumentException("Pas de médicament selectionné");
+								}
+								if(comboBox_6.getSelectedItem()==null) {
+									throw new IllegalArgumentException("Pas de patient selectionné");
+								}
+								if(comboBox_8.getSelectedItem()==null) {
+									throw new IllegalArgumentException("Pas de mutuelle selectionné");
+								}
+								
 							} catch (Exception e2) {
-								System.out.println("Pas de médicament saisie");
+								JOptionPane.showMessageDialog(panel_7, e2);
 							}
 							
+							
+
 						}
 					});
 					
@@ -455,23 +489,22 @@ public class App_Pharma extends JFrame {
 					btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 					panel_7.add(btnNewButton_3);
 				
-					JComboBox comboBox_6 = new JComboBox();
 					comboBox_6.setBounds(200, 11, 30, 00);
-					comboBox_6.setSelectedIndex(-1);
 					for (Patients value : listpatient) {	
 						comboBox_6.addItem(value.getNom());
 						panel_7.add(comboBox_6);
 					}
+					comboBox_6.setSelectedIndex(-1);
 					
 					panel_7.add(tableFactur);
 					
 					JComboBox comboBox_7 = new JComboBox();
 					comboBox_7.setBounds(367, 11, 30, 22);
-					comboBox_7.setSelectedIndex(-1);
 					for (Medicament value : ListMedi) {	
 						comboBox_7.addItem(value.getNom());
 						panel_7.add(comboBox_7);
 					}
+					comboBox_7.setSelectedIndex(-1);
 					
 					tableFactur.setDefaultEditor(Object.class, null);
 						tableFactur.setModel(new DefaultTableModel(
@@ -513,12 +546,13 @@ public class App_Pharma extends JFrame {
 						/**
 						 * juste un affichage des mutuelle pourt l'historique
 						 */
-						JComboBox comboBox_8 = new JComboBox();
+						
 						comboBox_8.setBounds(367, 11, 30, 22);
 						for (Mutuelle value2 : ListMut) {	
 							comboBox_8.addItem(value2.getNom());
 						
 						}
+						comboBox_8.setSelectedIndex(-1);
 						panel_7.add(comboBox_8);	
 						break;
 					}
@@ -560,7 +594,7 @@ public class App_Pharma extends JFrame {
 						comboBox_1.setSelectedIndex(-1);
 						
 					}
-					panel_1.removeAll();
+					
 					/**
 					 * si la combobox change de statue
 					 * toute les ordonance du medecin concerné s'affiche
