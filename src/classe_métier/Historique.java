@@ -4,20 +4,25 @@ import java.util.ArrayList;
 
 public class Historique {
 	
-	private Patients nom;
-	private ArrayList<Medicament> nomMedi;
+	private String nom;
 	private int somme;
+	private String Mutu;
 	
-	public Historique(Patients nom, ArrayList<Medicament> nomMedi, int somme) {
+	public Historique(String nom, int somme, String mutu) {
 		super();
 		this.nom = nom;
-		this.nomMedi = nomMedi;
+		this.somme = somme;
+		this.Mutu = mutu;
+	}
+
+	public Historique(String string, int somme) {
+		super();
+		this.nom = string;
 		this.somme = somme;
 	}
 
-	public String toString() {
-		return " \n nom patient : " + nom + "\n medicament selectionné : " +  nomMedi + "\n net a payer : " + somme ;
+	public String getNom() {
+		return nom;
 	}
-
 	
 }

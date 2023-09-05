@@ -14,7 +14,7 @@ import classe_métier.Medicament;
 import classe_métier.Mutuelle;
 import classe_métier.Ordonance;
 import classe_métier.Patients;
-
+import classe_métier.Personne;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -68,6 +68,7 @@ public class App_Pharma extends JFrame {
 	int somme = 0;
 	int sommeTampon = 0;
 	Patients TamponPat = null;
+	Mutuelle TamponMut = null;
 
 /**
  *  instanciation de tout les objets
@@ -296,21 +297,37 @@ public class App_Pharma extends JFrame {
 									throw new IllegalArgumentException("Pas de patient selectionné");
 								}
 							} catch (Exception e2) {
-								JOptionPane.showMessageDialog(panel_7, e2);
+								JOptionPane.showMessageDialog(panel_7, e2.getMessage());
 							}
 							
-							// doit aller chercher le nom du patient les medicament et le total pour le mettre dans une arraylist historique
-
-							if (tableFactur.getRowCount() != 1 && comboBox_3.getSelectedItem() !=null) {
-								for (Patients pat : listpatient) {
-								if (pat.identité().equals(comboBox_3.getSelectedItem())){
-									TamponPat = pat;
+							/**
+							 * boucle qui parcours la liste patients
+							 * recherche si dans la liste il y a le nom selectionné en combobox
+							 * et met les donnée rechercher dans la varable TamponPat
+							 */
+							String listMed = "";
+							for (Object pat : listpatient) {
+								if(((Personne) pat).identité().equals(comboBox_3.getSelectedItem())) {
+									TamponPat=(Patients) pat;
 								}
 							}
+							
+							/**
+							 * boucle qui parcours la liste des medicament qui a etait incrementé a chaque saisie ulterieur
+							 * et il affiche le nom de chaque 
+							 */
+							for(Medicament med:ListMediTampon) {
+								listMed=listMed+" "+med.getNom();
 							}
-							Listhisto.add(new Historique(TamponPat, ListMediTampon, sommeTampon));
+							
+							Listhisto.add(new Historique(TamponPat.identité(), sommeTampon));
 							JOptionPane jOptionPane = new JOptionPane();
-							JOptionPane.showConfirmDialog(panel_7, Listhisto);
+							
+							/**
+							 * affichage du nom patient, du medicament et de la somme dû
+							 */
+							JOptionPane.showConfirmDialog(panel_7,Listhisto.get(0).getNom() +"\n "+listMed + "\n "+ 
+							"somme a payé"+" "+ sommeTampon + "€");
 						
 						}
 					});
@@ -326,13 +343,28 @@ public class App_Pharma extends JFrame {
 					JButton btnNewButton_1 = new JButton("Suprimé");
 					
 					btnNewButton_1.setBounds(198, 187, 89, 23);
-					btnNewButton.addMouseListener(new MouseAdapter() {
+					btnNewButton_1.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 						
-						
-					}
-					});
+							try {
+								if(tableFactur.getSelectedRow()==-1 ) {
+									throw new IllegalArgumentException("Pas de ligne selectionné");
+								}
+								if(tableFactur.getRowCount()==1) {
+									throw new IllegalArgumentException("le tableau est vide");
+								}
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(panel_7, e2.getMessage());
+							}
+							
+							if(tableFactur.getSelectedRow()== tableFactur.getSelectedRow()) {
+
+								((DefaultTableModel) tableFactur.getModel()).removeRow(tableFactur.getSelectedRow());
+
+							}
+						}
+						});
 					
 					btnNewButton_1.setForeground(new Color(178, 34, 34));
 					btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
@@ -463,10 +495,35 @@ public class App_Pharma extends JFrame {
 								}
 								
 							} catch (Exception e2) {
-								JOptionPane.showMessageDialog(panel_7, e2);
+								JOptionPane.showMessageDialog(panel_7, e2.getMessage());
+							}
+							
+							String listMed = "";
+							
+							for (Object pat : listpatient) {
+								if(((Personne) pat).identité().equals(comboBox_6.getSelectedItem())) {
+									TamponPat = (Patients) pat;
+								}
+							}
+							
+							System.out.println(TamponPat);
+							
+							for(Medicament med:ListMediTampon) {
+								listMed=listMed+" "+med.getNom();
 							}
 							
 							
+							for(Mutuelle mut : ListMut) {
+								if(mut.getNom().equals(comboBox_8.getSelectedItem())) {
+									TamponMut = mut;
+								}
+							}
+							
+							Listhisto.add(new Historique(TamponPat.identité(), sommeTampon, TamponMut.getNom()));
+							JOptionPane jOptionPane = new JOptionPane();
+							
+							JOptionPane.showConfirmDialog(panel_7,Listhisto.get(0).getNom()+ "\n "+"Mutuelle : "+ TamponMut.getNom()
+							+"\n "+listMed + "\n "+"somme a payé"+" "+ sommeTampon + "€");
 
 						}
 					});
@@ -479,11 +536,28 @@ public class App_Pharma extends JFrame {
 					JButton btnNewButton_3 = new JButton("Suprimé");
 					
 					btnNewButton_3.setBounds(198, 187, 89, 23);
-					btnNewButton_3.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
+					btnNewButton_3.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+						
+							try {
+								if(tableFactur.getSelectedRow()==-1 ) {
+									throw new IllegalArgumentException("Pas de ligne selectionné");
+								}
+								if(tableFactur.getRowCount()==1) {
+									throw new IllegalArgumentException("le tableau est vide");
+								}
+							} catch (Exception e2) {
+								JOptionPane.showMessageDialog(panel_7, e2.getMessage());
+							}
+							
+							if(tableFactur.getSelectedRow()== tableFactur.getSelectedRow()) {
+
+								((DefaultTableModel) tableFactur.getModel()).removeRow(tableFactur.getSelectedRow());
+
+							}
 						}
-					
-					});
+						});
 					
 					btnNewButton_3.setForeground(new Color(178, 34, 34));
 					btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
@@ -491,7 +565,7 @@ public class App_Pharma extends JFrame {
 				
 					comboBox_6.setBounds(200, 11, 30, 00);
 					for (Patients value : listpatient) {	
-						comboBox_6.addItem(value.getNom());
+						comboBox_6.addItem(value.identité());
 						panel_7.add(comboBox_6);
 					}
 					comboBox_6.setSelectedIndex(-1);
@@ -532,6 +606,8 @@ public class App_Pharma extends JFrame {
 										
 										model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
 
+										ListMediTampon.add(med);
+										
 										textField.setText(""+ 0);
 										
 										panel_4.add(tableFactur,BorderLayout.SOUTH);
