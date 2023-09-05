@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import classe_métier.Historique;
+import classe_métier.Historique1;
 import classe_métier.Medecin;
 import classe_métier.Medicament;
 import classe_métier.Mutuelle;
@@ -57,7 +57,7 @@ public class App_Pharma extends JFrame {
 	static ArrayList<Medicament>ListMediTampon= new ArrayList<>();
 	static ArrayList<Ordonance>Listordo= new ArrayList<>();
 	static ArrayList<Mutuelle>ListMut= new ArrayList<>();
-	static ArrayList<Historique>Listhisto= new ArrayList<>();
+	static ArrayList<Historique1>Listhisto= new ArrayList<>();
 	
 	private JPanel contentPane;
 	private JTable table_Ordo_Med;
@@ -244,19 +244,20 @@ public class App_Pharma extends JFrame {
 			 */
 			comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panel_1.revalidate();;
+				//panel_1.revalidate();
 				
 				switch (comboBox.getSelectedIndex()) {
 				
 				case 0 :
-					panel_7.setVisible(false);
-					panel_5.setVisible(true);
+					//panel_7.setVisible(false);
+					//panel_5.setVisible(true);
+					//panel_6.setVisible(false);
 					//combobox pour le sous menu 
 					JComboBox comboBox_5 = new JComboBox<String>(new String[] {"sans ordonance", "avec ordonance"});
 					comboBox_5.setOpaque(false);
 					comboBox_5.setSelectedIndex(-1);
-					panel_6.add(comboBox_5, BorderLayout.CENTER);
-					panel_1.add(panel_6);
+					panel_5.add(comboBox_5, BorderLayout.CENTER);
+					panel_1.add(panel_5);
 					comboBox_5.addActionListener(new ActionListener() {
 						
 						@Override
@@ -267,8 +268,11 @@ public class App_Pharma extends JFrame {
 					switch (comboBox_5.getSelectedIndex()) {
 					
 					case 0 :
+						panel_7.setVisible(false);
+						panel_5.setVisible(true);
+						panel_6.setVisible(false);
 						comboBox_5.setVisible(false);
-						panel_6.add(panel_5, BorderLayout.CENTER);
+						//panel_6.add(panel_5, BorderLayout.CENTER);
 					
 						// le textfield servira a compter la somme de toute les lignes du tableau
 						textField = new JTextField();
@@ -323,7 +327,7 @@ public class App_Pharma extends JFrame {
 //								listMed=listMed+" "+med.getNom();
 //							}
 							
-							Listhisto.add(new Historique(TamponPat.identité(),ListMediTampon, sommeTampon));
+							Listhisto.add(new Historique1(TamponPat.identité(),ListMediTampon, sommeTampon));
 							JOptionPane jOptionPane = new JOptionPane();
 							
 							/**
@@ -459,19 +463,19 @@ public class App_Pharma extends JFrame {
 						System.out.println(sommeTampon);
 						System.out.println(ListMediTampon);
 						
-					panel_6.add(panel_5);
-					panel_1.add(panel_6);
+					//panel_6.add(panel_5);
+					panel_1.add(panel_5);
 					
 					break;
 					case 1 :
 						
-						panel_5.setVisible(false);
-						panel_7.setVisible(true);
+						//panel_5.setVisible(false);
+						//panel_7.setVisible(true);
 						 /**
 						  * les commentaire sont les même que le case 0.0
 						  */
 						comboBox_5.setVisible(false);
-						panel_6.add(panel_7, BorderLayout.CENTER);
+						panel_1.add(panel_7, BorderLayout.CENTER);
 						
 						
 						textField = new JTextField();
@@ -527,7 +531,7 @@ public class App_Pharma extends JFrame {
 								}
 							}
 							
-							Listhisto.add(new Historique(TamponPat.identité(),ListMediTampon, sommeTampon, TamponMut.getNom()));
+							Listhisto.add(new Historique1(TamponPat.identité(),ListMediTampon, sommeTampon, TamponMut.getNom()));
 							JOptionPane jOptionPane = new JOptionPane();
 							
 							JOptionPane.showConfirmDialog(panel_7,Listhisto.get(0).getNom()+ "\n "+"Mutuelle : "+ TamponMut.getNom()
@@ -640,8 +644,8 @@ public class App_Pharma extends JFrame {
 					}
 						}
 					});
-					panel_6.add(panel_7);
-					panel_1.add(panel_6);
+					//panel_6.add(panel_7);
+					panel_1.add(panel_7);
 					
 				case 1 :
 //					JPanel panel_8 = new JPanel();
@@ -676,6 +680,10 @@ public class App_Pharma extends JFrame {
 					
 					break;
 				case 2 :
+					
+					//panel_5.setVisible(false);
+					//panel_7.setVisible(false);
+					
 					/**
 					 * cration d'une jtable pour affiché les donnée des ordonance
 					 * par rapport au nom du medecin
@@ -694,7 +702,7 @@ public class App_Pharma extends JFrame {
 					 * creation de la combobox
 					 */
 					
-					contentPane.add(panel_2, BorderLayout.CENTER);
+					panel_1.add(panel_2, BorderLayout.CENTER);
 					JComboBox comboBox_1 = new JComboBox();
 					
 					/**
@@ -740,7 +748,7 @@ public class App_Pharma extends JFrame {
 					panel_1.add(panel_2);
 					break;
 				case 3 :
-					contentPane.add(panel_3, BorderLayout.CENTER);
+					panel_1.add(panel_3, BorderLayout.CENTER);
 					
 					/**
 					 *  crétion de la combobox 
