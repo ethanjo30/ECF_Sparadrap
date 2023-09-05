@@ -148,7 +148,7 @@ public class App_Pharma extends JFrame {
 		Ordonance ordo2 = new Ordonance("12/07/23","Gallet","Anne","Durand","Marie","Antidiarrhéiques"," "," "," ");
 		Ordonance ordo3 = new Ordonance("03/001/22","Malka","Michel","Duvet","Honorine","Polymyxines","Diurétiques","Tétracyclines"," ");
 		Ordonance ordo4 = new Ordonance("22/08/23","Malka","Michel","Petit","Jonathan","Antifongiques","Analgésique"," "," ");
-		Ordonance ordo5 = new Ordonance("26/005/23","Khebichat","Omar","Pierard","Laetitia","Antidiarrhéiques","Analgésique"," "," ");
+		Ordonance ordo5 = new Ordonance("26/05/23","Khebichat","Omar","Pierard","Laetitia","Antidiarrhéiques","Analgésique"," "," ");
 		Ordonance ordo6 = new Ordonance("22/08/23","Khebichat","Omar","Durand","Marie","Analgésique"," "," "," ");
 		Ordonance ordo7 = new Ordonance("22/08/23","Khebichat","Omar","Duvet","Honorine","Antituberculeux","Corticoïde","Antiacnéiques","Antispasmodiques");
 		Ordonance ordo8 = new Ordonance("22/08/23","Burseaux","Sarah","Pierard","Laetitia","Antituberculeux"," "," "," ");
@@ -217,6 +217,7 @@ public class App_Pharma extends JFrame {
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 				
+				
 		/**
 		 * menu principal deroulant
 		 */
@@ -248,6 +249,8 @@ public class App_Pharma extends JFrame {
 				switch (comboBox.getSelectedIndex()) {
 				
 				case 0 :
+					panel_7.setVisible(false);
+					panel_5.setVisible(true);
 					//combobox pour le sous menu 
 					JComboBox comboBox_5 = new JComboBox<String>(new String[] {"sans ordonance", "avec ordonance"});
 					comboBox_5.setOpaque(false);
@@ -316,11 +319,11 @@ public class App_Pharma extends JFrame {
 							 * boucle qui parcours la liste des medicament qui a etait incrementé a chaque saisie ulterieur
 							 * et il affiche le nom de chaque 
 							 */
-							for(Medicament med:ListMediTampon) {
-								listMed=listMed+" "+med.getNom();
-							}
+//							for(Medicament med:ListMediTampon) {
+//								listMed=listMed+" "+med.getNom();
+//							}
 							
-							Listhisto.add(new Historique(TamponPat.identité(), sommeTampon));
+							Listhisto.add(new Historique(TamponPat.identité(),ListMediTampon, sommeTampon));
 							JOptionPane jOptionPane = new JOptionPane();
 							
 							/**
@@ -329,6 +332,8 @@ public class App_Pharma extends JFrame {
 							JOptionPane.showConfirmDialog(panel_7,Listhisto.get(0).getNom() +"\n "+listMed + "\n "+ 
 							"somme a payé"+" "+ sommeTampon + "€");
 						
+							
+							
 						}
 					});
 					
@@ -459,6 +464,9 @@ public class App_Pharma extends JFrame {
 					
 					break;
 					case 1 :
+						
+						panel_5.setVisible(false);
+						panel_7.setVisible(true);
 						 /**
 						  * les commentaire sont les même que le case 0.0
 						  */
@@ -519,7 +527,7 @@ public class App_Pharma extends JFrame {
 								}
 							}
 							
-							Listhisto.add(new Historique(TamponPat.identité(), sommeTampon, TamponMut.getNom()));
+							Listhisto.add(new Historique(TamponPat.identité(),ListMediTampon, sommeTampon, TamponMut.getNom()));
 							JOptionPane jOptionPane = new JOptionPane();
 							
 							JOptionPane.showConfirmDialog(panel_7,Listhisto.get(0).getNom()+ "\n "+"Mutuelle : "+ TamponMut.getNom()
@@ -613,9 +621,7 @@ public class App_Pharma extends JFrame {
 										panel_4.add(tableFactur,BorderLayout.SOUTH);
 										panel_7.add(panel_4);
 
-									
 									}
-									
 								}						
 						}});
 						
@@ -638,6 +644,36 @@ public class App_Pharma extends JFrame {
 					panel_1.add(panel_6);
 					
 				case 1 :
+//					JPanel panel_8 = new JPanel();
+//					panel_1.add(panel_8);
+//					panel_8.setLayout(new BorderLayout(0, 0));
+//					
+//					JButton btnNewButton_4 = new JButton("achat du jour");
+//					panel_1.add(btnNewButton_4);
+//					
+//					JComboBox comboBox_9 = new JComboBox<String>(new String[] {"03/01/22", "26/05/23","12/07/23","22/08/23"});
+//					panel_1.add(comboBox_9);
+//					comboBox_9.setSelectedIndex(-1);
+//					comboBox_9.addActionListener(new ActionListener() {
+//						
+//						@Override
+//						public void actionPerformed(ActionEvent e){
+//					
+//							switch (comboBox_9.getSelectedIndex()) {
+//							
+//							//case
+//							}
+//							
+//						}
+//					});
+					
+					
+					
+					
+					
+					
+					
+					
 					break;
 				case 2 :
 					/**
