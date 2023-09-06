@@ -468,7 +468,6 @@ public class App_Pharma extends JFrame {
 								for (Medicament med : ListMedi) {
 									if (med.getNom().equals(comboBox_4.getSelectedItem())) {
 										DefaultTableModel model = (DefaultTableModel) tableFactur.getModel();
-										model.addRow(new Object[]{"Ligne 1"});
 										
 										model.addRow(new Object[] {med.getNom(),med.getDateMiseService(),med.getQuantité(),med.getPrix()});
 
