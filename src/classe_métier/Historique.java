@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class Historique {
 	
+	@Override
+	public String toString() {
+		return "nom patient : " + nom + "\n somme : " + somme + "\n Mutuelle : " + Mut + "";
+	}
+
 	private String nom;
 	private ArrayList<Medicament> nomMedi;
 	private int somme;
